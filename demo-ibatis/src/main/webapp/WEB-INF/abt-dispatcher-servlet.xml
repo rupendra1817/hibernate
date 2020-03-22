@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+   	http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://www.springframework.org/schema/mvc
+	http://www.springframework.org/schema/mvc/spring-mvc.xsd
+	http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+	http://www.springframework.org/schema/context
+	http://www.springframework.org/schema/context/spring-context.xsd
+	http://www.springframework.org/schema/util
+    http://www.springframework.org/schema/util/spring-util-4.0.xsd
+    http://www.springframework.org/schema/aop
+    http://www.springframework.org/schema/aop/spring-aop-3.0.xsd">
+	<!-- <context:annotation-config /> -->
+	<context:component-scan
+		base-package="com.howtodoinjava.ibatis.demo.*" />
+	<mvc:annotation-driven />
+	<!-- <aop:aspectj-autoproxy proxy-target-class="true" /> -->
+	<mvc:resources mapping="/**" location="/" />
+
+
+	<bean id="dataSource"
+		class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+		<property name="driverClassName"
+			value="com.mysql.jdbc.Driver" />
+		<property name="url"
+			value="jdbc:mysql://localhost:3306/demodb" />
+		<property name="username" value="root" />
+		<property name="password" value="root" />
+	</bean>
+
+
+	<bean id="sqlMap"
+		class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
+		<property name="configLocation">
+			<value>classpath:sql-maps-config.xml</value>
+		</property>
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+
+	<!-- <bean id="tradingService" class="com.developersBook.iBatis.service.TradeServiceImpl"> 
+		<property name="sqlMapClient" ref="sqlMap" /> </bean> -->
+
+
+
+
+</beans>
